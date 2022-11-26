@@ -5,7 +5,8 @@ from pathlib import Path
 
 # Get File system // UPDATE USING PWD in TERMINAL
 # ==============================
-mypath = "/Users/drewpage/Desktop/"
+# mypath = "/Users/drewpage/Desktop/"
+mypath = "/Volumes/Film and Music Backups/testing"
 files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
 for file in files:

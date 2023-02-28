@@ -19,40 +19,44 @@ load_dotenv()
 
 # Set configuration parameter: return "https" URLs by setting secure=true
 # ==============================
+print("Enter API Secret: ")
+
 config = cloudinary.config(
-    # ADD CONFIG VARIABLES
+    cloud_name="drewpager",
+    api_key="249778568612973",
+    api_secret = input()
 )
 
 # Log the configuration
 # ==============================
-
-print("****1. Set up and configure the SDK:****\nCredentials: ",
-      config.cloud_name, config.api_key, "\n")
+print("Enter the path to content (ex. Volumes/Desktop/Academic Version Uploads): ")
+mypath = input()
+print("****1. Set up and configure the SDK:****\nCredentials: ", config.cloud_name, config.api_key, "\n")
 
 # Get File system // UPDATE USING PWD in TERMINAL
 # ==============================
-mypath = "/Volumes/Film and Music Backups/testing"
 files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
-for file in files:
-    route = mypath + "/" + file
-    print(route)
-
-    # Upload to Cloudinary: Change folder when ready!
-    cloudinary.uploader.upload_large(
-        mypath + "/" + file,
-        upload_preset="platos-peach",
-        resource_type="video",
-        use_filename=True
-    )
-
-    srcURL = cloudinary.CloudinaryVideo(file).build_url()
-    print(srcURL)
 
 with open('videos.csv', 'w') as csvfile:
     filewriter = csv.writer(csvfile,
                             quoting=csv.QUOTE_MINIMAL, dialect="excel")
     filewriter.writerow(['title', 'cloudinary_url'])
     for file in files:
-        name = Path(file).stem
+        route = mypath + "/" + file
+        print(route)
+
+        cloudinary.uploader.upload_large(
+            mypath + "/" + file,
+            upload_preset="platos-peach",
+            resource_type="video",
+            use_filename=True
+        )
+
+        srcURL = cloudinary.CloudinaryVideo(file).build_url()
+        print(srcURL)
+        # If videos have extensions:
+        # name = Path(file).stem
+
+        # If videos do not have extensions:
+        name = Path(file)
         filewriter.writerow([name, srcURL])

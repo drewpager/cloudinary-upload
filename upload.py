@@ -9,8 +9,6 @@ import csv
 from os.path import isfile, join
 from os import listdir
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 # Import the Cloudinary libraries
 # ==============================
